@@ -21,13 +21,14 @@ def home():
         rainfall = request.form['rainfall']
 
         # 위에서 받아온 값을 모델에 적용하기 위해 array 형태로 바꿔줌 
-        X = [[avg_temp, min_temp, max_temp, rainfall]]
+        X = [[float(avg_temp), float(min_temp), float(max_temp), float(rainfall)]]
         print(X)
 
-        # 모델에 정규화 된 데이터를 넣어 예측값 출력
+        # 입력 데이터 정규화
         X_std = sc.transform(X)
         print(X_std)
 
+        # 정규화 된 데이터로 예측
         predicted_price = mlr.predict(X_std)
         print(predicted_price)
 
