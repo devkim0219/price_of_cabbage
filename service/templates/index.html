@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>배추가격 예측 시스템</title>
+</head>
+<body>
+    <h3>배추가격 예측 시스템</h3><hr>
+    <p># 데이터를 입력하세요.</p>
+    <div style="width: 250px; margin-top: 20px;">
+        <div>
+            <label>평균 온도</label>
+            <input type="text" id="avg_temp" style="height: 25px;">
+        </div>
+        <div style="margin-top: 5px;">
+            <label>최소 온도</label>
+            <input type="text" id="min_temp" style="height: 25px;">
+        </div>
+        <div style="margin-top: 5px;">
+            <label>최대 온도</label>
+            <input type="text" id="max_temp" style="height: 25px;">
+        </div>
+        <div style="margin-top: 5px;">
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;강수량</label>
+            <input type="text" id="rainfall" style="height: 25px;">
+        </div>
+        <div style="margin-top: 15px; float: right;">
+            <input type="button" id="predict_btn" value="예측하기">
+        </div>
+    </div>
+    <div style="margin-top: 60px;">
+        <hr>
+        <p># 예측 결과</p>
+        <p>예상 배추가격은 <span id="price"></span>원 입니다.</p>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(function() {
+    $('#predict_btn').on("click", function() {
+        $.ajax({
+            method: 'POST',
+            url: '/',
+            data: {
+                'avg_temp': $('#avg_temp').val(),
+                'min_temp': $('#min_temp').val(),
+                'max_temp': $('#max_temp').val(),
+                'rainfall': $('#rainfall').val()
+            },
+            dataType: 'json',
+            success: function(json) {
+                $('#price').text(json.price)
+            },
+            error: function(request, error) {
+                alert(error)
+            }
+        })
+    })
+})
+</script>
+</html>
